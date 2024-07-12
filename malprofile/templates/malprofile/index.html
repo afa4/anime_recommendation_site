@@ -1,0 +1,8 @@
+<form action="/malprofile/submit" method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend><h1>Submit MAL profile name to get recommendation:</h1></legend>
+        <input type="text" name="profile_name" id="profile_name_input" value="{{ choice.id }}">
+    </fieldset>
+    <input type="submit" value="Submit">
+</form>
