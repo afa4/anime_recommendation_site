@@ -5,23 +5,29 @@
   </head>
 
   <body>
-    <div class="container">
-      <form action="/malprofile/submit" method="post">
-        {% csrf_token %}
-        <fieldset>
-          <div class="mb-3">
-            <label for="profile_name_input" class="form-label">Submit MAL profile name to get recommendation:</label>
-            <input type="text" name="profile_name" id="profile_name_input" class="form-control" value="{{ choice.id }}" />
-          </div>
-        </fieldset>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+          <form action="/malprofile/submit" method="post">
+            {% csrf_token %}
+            <fieldset>
+              <div class="mb-3">
+                <label for="profile_name_input" class="form-label">Submit MAL profile name to get recommendation:</label>
+                <input type="text" name="profile_name" id="profile_name_input" class="form-control" value="{{ choice.id }}" />
+              </div>
+            </fieldset>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+        <div class="col-2"></div>
+      </div>
     </div>
   </body>
 
   <footer>
-    <div class="container">
-      <div class="col-md-12">
+    <div class="container text-center">
+      <div class="row">
         <p>Powered by MAL API</p>
       </div>
     </div>
