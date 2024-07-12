@@ -7,5 +7,5 @@ def index(request):
 
 def profile_submit(request):
     print(request.POST['profile_name'])
+    # todo: get profile and animelist from MAL
     return HttpResponse("You're submitting your profile!")
-    
