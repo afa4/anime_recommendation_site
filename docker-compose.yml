@@ -1,0 +1,12 @@
+services:
+  web:
+    build:
+      dockerfile: ./Dockerfile
+    volumes:
+      - .:/app
+    environment:
+      - API_URL=http://host.docker.internal:8080
+    ports:
+      - 8000:8000
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

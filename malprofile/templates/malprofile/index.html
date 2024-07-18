@@ -13,8 +13,8 @@
             {% csrf_token %}
             <fieldset>
               <div class="mb-3">
-                <label for="profile_name_input" class="form-label">Submit MAL profile name to get recommendation:</label>
-                <input type="text" name="profile_name" id="profile_name_input" class="form-control" value="{{ choice.id }}" />
+                <label for="anime_name_input" class="form-label">Submit an ANIME name to get recommendation based on similarity:</label>
+                <input type="text" name="anime_name" id="anime_name_input" class="form-control" value="{{ choice.id }}" />
               </div>
             </fieldset>
             <button type="submit" class="btn btn-primary">Submit</button>
