@@ -17,7 +17,9 @@ def anime_submit(request):
     for anime in get_top_three_profile_animes(profile_name):
         anime_name = anime['node']['title']
         recommendations.append(get_recommendation_from_api(anime_name, 10))
-    
+    # todo: refine and filter final recommendations
+    # todo: create view template for final list
+    # todo: anime thumbnail
     return HttpResponse(json.dumps(recommendations), content_type='application/json')
 
 
