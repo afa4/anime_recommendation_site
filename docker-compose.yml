@@ -4,8 +4,7 @@ services:
       dockerfile: ./Dockerfile
     volumes:
       - .:/app
-    environment:
-      - API_URL=http://host.docker.internal:8080
+    env_file: .env
     ports:
       - 8000:8000
     extra_hosts:
