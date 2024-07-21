@@ -21,9 +21,7 @@ def anime_submit(request):
         recommendations_from_api = get_recommendation_from_api(anime_name, 5)
         if recommendations_from_api is None:
             continue
-        for item in get_recommendation_from_api(anime_name, 5):
-            if item is None:
-                continue
+        for item in recommendations_from_api:
             recommendations.append({
                 "anime_name": item,
             })
