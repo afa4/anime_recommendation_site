@@ -3,6 +3,7 @@ from django.http import HttpResponse
 import os
 import requests
 import json
+import re
 
 
 def index(request):
@@ -11,16 +12,27 @@ def index(request):
 
 def anime_submit(request):
     profile_name = request.POST['profile_name']
-    print(profile_name)
-    get_top_three_profile_animes(profile_name)
+    top_three = get_top_three_profile_animes(profile_name)
     recommendations = []
-    for anime in get_top_three_profile_animes(profile_name):
+    top_three_names = []
+    for anime in top_three:
         anime_name = anime['node']['title']
-        recommendations.append(get_recommendation_from_api(anime_name, 10))
-    # todo: refine and filter final recommendations
-    # todo: create view template for final list
-    # todo: anime thumbnail
-    return HttpResponse(json.dumps(recommendations), content_type='application/json')
+        top_three_names.append(anime_name)
+        recommendations_from_api = get_recommendation_from_api(anime_name, 5)
+        if recommendations_from_api is None:
+            continue
+        for item in get_recommendation_from_api(anime_name, 5):
+            if item is None:
+                continue
+            recommendations.append({
+                "anime_name": item,
+            })
+    # todo include anime thumb in final list
+    response = {
+        "top_three": top_three_names,
+        "recommendations": recommendations
+    }
+    return HttpResponse(json.dumps(response), content_type='application/json')
 
 
 def get_top_three_profile_animes(profile_name):
@@ -35,7 +47,7 @@ def get_top_three_profile_animes(profile_name):
         top_three_animes = data[:3]
         return top_three_animes
     else:
-        return []
+        log_error(response)     
 
 
 def get_recommendation_from_api(anime_name, recommendation_length = 20):
@@ -46,7 +58,23 @@ def get_recommendation_from_api(anime_name, recommendation_length = 20):
         data = response.json()
         return data
     else:
-        print(response.__str__())
-        print(response.status_code)
-        print("Failed to retrieve data")
+        log_error(response)
         return None
+
+
+def get_anime_metadata(anime_name):
+    url = os.environ.get("API_URL")
+    response = requests.get(f'https://api.myanimelist.net/v2/anime?q={anime}&limit=1')
+
+    if response.status_code == 200:
+        data = response.json()['data'][0]
+        return data
+    else:
+        log_error(response)
+        return None
+
+
+def log_error(response):
+    print(response.__str__())
+    print(response.status_code)
+    print("Failed to retrieve data")
