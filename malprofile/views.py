@@ -14,20 +14,22 @@ def anime_submit(request):
     profile_name = request.POST['profile_name']
     top_three = get_top_three_profile_animes(profile_name)
     
-    recommendations = []
-    top_three_names = []
+    top_three_anime_names = []
     for anime in top_three:
-        anime_name = anime['node']['title']
-        top_three_names.append(anime_name)
-        recommendations_from_api = get_recommendation_from_api(anime_name, 5)
-        if recommendations_from_api is None:
-            continue
-        for item in recommendations_from_api:
-            recommendations.append(item)
+        top_three_anime_names.append(anime['node']['title'])
+
+    recommendations = get_recommendations_based_on_list(top_three_anime_names)
+        
+    if len(recommendations) == 0:
+        context = {
+            "error_message": "No recommendations found"
+        }
+        return render(request, "malprofile/error.html", context)
     
     final_recommendations = []
     for recommend in recommendations:
-        for name in top_three_names:
+        print(recommend)
+        for name in top_three_anime_names:
             if re.search(name, recommend):
                 should_include = False
                 break
@@ -38,7 +40,7 @@ def anime_submit(request):
     final_recommendations = list(dict.fromkeys(final_recommendations))
     
     context = {
-        "top_three": top_three_names,
+        "top_three": top_three_anime_names,
         "recommendations": final_recommendations
     }
     return render(request, "malprofile/recommendation.html", context)
@@ -57,6 +59,17 @@ def get_top_three_profile_animes(profile_name):
         return top_three_animes
     else:
         log_error(response)     
+
+
+def get_recommendations_based_on_list(anime_list):
+    recommendations = []
+    for anime_name in anime_list:
+        recommendations_from_api = get_recommendation_from_api(anime_name, 5)
+        if recommendations_from_api is None:
+            continue
+        for item in recommendations_from_api:
+            recommendations.append(item)
+    return recommendations
 
 
 def get_recommendation_from_api(anime_name, recommendation_length = 20):
