@@ -1,16 +1,21 @@
-
-
-{% extends "malprofile/index.html" %}
+{% extends 'malprofile/index.html' %}
 
 {% block content %}
-<form action="/malprofile/submit" method="post">
-  {% csrf_token %}
-  <fieldset>
-    <div class="mb-3">
-      <label for="profile_name_input" class="form-label">Submit your MyAnimeListProfile to get recommendation:</label>
-      <input type="text" name="profile_name" id="profile_name_input" class="form-control" value="{{ choice.id }}" />
+  <div class="card mx-auto" style="width: 30rem;">
+    <div class="tenor-gif-embed card-img-top" data-postid="5759477" data-share-method="host" data-aspect-ratio="1.33333" data-width="100%">
+      <a href="https://tenor.com/view/pokemon-ash-ketchum-peace-out-bye-gif-5759477">Pokemon Ash Ketchum GIF</a>from <a href="https://tenor.com/search/pokemon-gifs">Pokemon GIFs</a>
     </div>
-  </fieldset>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+    <div class="card-body">
+      <form action="/malprofile/submit" method="post">
+        {% csrf_token %}
+        <fieldset>
+          <div class="mb-3">
+            <label for="profile_name_input" class="form-label">Submit your MyAnimeListProfile to get recommendation:</label>
+            <input type="text" name="profile_name" id="profile_name_input" class="form-control" value="{{ choice.id }}" />
+          </div>
+        </fieldset>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
 {% endblock %}
