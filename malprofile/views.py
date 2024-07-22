@@ -13,6 +13,7 @@ def index(request):
 def anime_submit(request):
     profile_name = request.POST['profile_name']
     top_three = get_top_three_profile_animes(profile_name)
+    
     recommendations = []
     top_three_names = []
     for anime in top_three:
@@ -22,15 +23,25 @@ def anime_submit(request):
         if recommendations_from_api is None:
             continue
         for item in recommendations_from_api:
-            recommendations.append({
-                "anime_name": item,
-            })
-    # todo include anime thumb in final list
-    response = {
+            recommendations.append(item)
+    
+    final_recommendations = []
+    for recommend in recommendations:
+        for name in top_three_names:
+            if re.search(name, recommend):
+                should_include = False
+                break
+            should_include = True
+        if should_include:
+            final_recommendations.append(recommend)
+    
+    final_recommendations = list(dict.fromkeys(final_recommendations))
+    
+    context = {
         "top_three": top_three_names,
-        "recommendations": recommendations
+        "recommendations": final_recommendations
     }
-    return HttpResponse(json.dumps(response), content_type='application/json')
+    return render(request, "malprofile/recommendation.html", context)
 
 
 def get_top_three_profile_animes(profile_name):

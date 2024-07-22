@@ -1,0 +1,11 @@
+<b>Based on that list of animes you liked</b>
+
+{% for watched_anime in top_three %}
+    <p>{{ watched_anime }}</p>
+{% endfor %}
+
+<b>We recommend the following</b>
+
+{% for recommend in recommendations %}
+    <p>{{ recommend }}</p>
+{% endfor %}
