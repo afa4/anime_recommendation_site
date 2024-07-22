@@ -3,7 +3,7 @@
 
 {% block content %}
 {% for item in recommendations %}
-    <p>Because you watched <b>{{item.watched_anime}}, </b></p>
+    <p>Because you watched <b>{{item.watched_anime}}</b></p>
     <p>We recommend the following<p>
     <ul>
     {% for recommended_anime in item.recommendation %}
