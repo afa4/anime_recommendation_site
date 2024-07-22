@@ -84,13 +84,17 @@ def refine_recommendation(recommendation):
 
 def get_recommendation_from_api(anime_name, recommendation_length = 20):
     url = os.environ.get("API_URL")
-    response = requests.get(f'{url}/recommendation?anime_name={anime_name}&length={recommendation_length}')
+    try:
+        response = requests.get(f'{url}/recommendation?anime_name={anime_name}&length={recommendation_length}')
 
-    if response.status_code == 200:
-        data = response.json()
-        return data
-    else:
-        log_error(response)
+        if response.status_code == 200:
+            data = response.json()
+            return data
+        else:
+            log_error(response)
+            return None
+    except:
+        print("Failed to retrieve data from api")
         return None
 
 
