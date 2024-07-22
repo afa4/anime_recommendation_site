@@ -5,9 +5,9 @@
 {% for item in recommendations %}
     <p>Because you watched <b>{{item.watched_anime}}</b></p>
     <p>We recommend the following<p>
-    <ul>
+    <ul class="list-group">
     {% for recommended_anime in item.recommendation %}
-        <li>{{recommended_anime.anime_name}}</li>
+        <li class="list-group-item">{{recommended_anime.anime_name}}</li>
     {% endfor %}
     </ul>
 {% endfor %}
