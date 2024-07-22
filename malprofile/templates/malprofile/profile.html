@@ -1,0 +1,16 @@
+
+
+{% extends "malprofile/index.html" %}
+
+{% block content %}
+<form action="/malprofile/submit" method="post">
+  {% csrf_token %}
+  <fieldset>
+    <div class="mb-3">
+      <label for="profile_name_input" class="form-label">Submit your MyAnimeListProfile to get recommendation:</label>
+      <input type="text" name="profile_name" id="profile_name_input" class="form-control" value="{{ choice.id }}" />
+    </div>
+  </fieldset>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock %}

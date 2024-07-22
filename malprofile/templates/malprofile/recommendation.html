@@ -1,4 +1,7 @@
 
+{% extends "malprofile/index.html" %}
+
+{% block content %}
 {% for item in recommendations %}
     <p>Because you watched <b>{{item.watched_anime}}, </b></p>
     <p>We recommend the following<p>
@@ -8,3 +11,4 @@
     {% endfor %}
     </ul>
 {% endfor %}
+{% endblock %}

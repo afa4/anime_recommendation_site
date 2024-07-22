@@ -6,8 +6,8 @@ import json
 import re
 
 
-def index(request):
-    return render(request, "malprofile/index.html")
+def profile(request):
+    return render(request, "malprofile/profile.html")
 
 
 def anime_submit(request):
