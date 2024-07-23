@@ -19,14 +19,8 @@ COPY ./anime_recommendation_site anime_recommendation_site
 COPY ./malprofile ./malprofile
 COPY manage.py .
 
-# Install Nginx
-RUN apt-get update && apt-get install -y nginx
-
-# Copy the Nginx configuration file
-COPY nginx.conf /etc/nginx/nginx.conf
-
 # Expose the port
-EXPOSE 80
+EXPOSE 8000
 
 # Start Nginx and Gunicorn
-CMD service nginx start && gunicorn anime_recommendation_site.wsgi:application --bind 0.0.0.0:8000
+CMD gunicorn anime_recommendation_site.wsgi:application --bind 0.0.0.0:8000 --timeout 120

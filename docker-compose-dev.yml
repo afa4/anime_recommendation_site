@@ -5,21 +5,13 @@ services:
     volumes:
       - .:/app
     env_file: .env
+    ports:
+      - 8081:8000
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:
       - appnet
-
-  nginx:
-    image: nginx:alpine
-    ports:
-      - 8081:80
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-    depends_on:
-      - app
-    networks:
-      - appnet
+    command: python manage.py runserver
   
 networks:
   appnet:
